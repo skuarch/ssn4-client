@@ -124,7 +124,10 @@ public class MainFrame extends javax.swing.JFrame {
     public JPanel getjPanelCenter() {
         return jPanelCenter;
     }    
-    
+
+    public JMenuItem getjMenuItemCloseAllTabs() {
+        return jMenuItemCloseAllTabs;
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -144,6 +147,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
         jMenuItemExit = new javax.swing.JMenuItem();
+        jMenuItemCloseAllTabs = new javax.swing.JMenuItem();
         jMenuTools = new javax.swing.JMenu();
         jMenuItemEventViewer = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
@@ -178,12 +182,12 @@ public class MainFrame extends javax.swing.JFrame {
         jPanelCenter.setLayout(jPanelCenterLayout);
         jPanelCenterLayout.setHorizontalGroup(
             jPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addGap(0, 476, Short.MAX_VALUE)
             .addGroup(jPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanelCenterLayout.createSequentialGroup()
-                    .addGap(0, 87, Short.MAX_VALUE)
+                    .addGap(0, 90, Short.MAX_VALUE)
                     .addComponent(jLabel1)
-                    .addGap(0, 88, Short.MAX_VALUE)))
+                    .addGap(0, 90, Short.MAX_VALUE)))
         );
         jPanelCenterLayout.setVerticalGroup(
             jPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,6 +214,9 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItemExit.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/images/shutdown-mini.png"))); // NOI18N
         jMenuItemExit.setText("exit");
         jMenuFile.add(jMenuItemExit);
+
+        jMenuItemCloseAllTabs.setText("close all tabs");
+        jMenuFile.add(jMenuItemCloseAllTabs);
 
         jMenuBar.add(jMenuFile);
 
@@ -304,6 +311,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuConfiguration;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenuItem jMenuItemAbout;
+    private javax.swing.JMenuItem jMenuItemCloseAllTabs;
     private javax.swing.JMenuItem jMenuItemConfiguration;
     private javax.swing.JMenuItem jMenuItemEndToEnd;
     private javax.swing.JMenuItem jMenuItemEventViewer;

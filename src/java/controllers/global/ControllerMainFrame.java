@@ -11,6 +11,7 @@ import javax.swing.JTree;
 import javax.swing.SwingWorker;
 import model.beans.Configuration;
 import model.common.ModelConfiguration;
+import model.util.CategoriesUtilities;
 import model.util.ViewUtilities;
 import views.dialogs.EventViewer;
 import views.frames.MainFrame;
@@ -121,7 +122,10 @@ public class ControllerMainFrame extends Controller {
 
                 try {
 
-                    //------------------------------------------------------------------
+                    //----------------------------------------------------------
+                    /**
+                     * exit the program.
+                     */
                     mainFrame.getjMenuItemExit().addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -129,7 +133,19 @@ public class ControllerMainFrame extends Controller {
                         }
                     });
 
-                    //------------------------------------------------------------------
+                    //----------------------------------------------------------
+                    /**
+                     * close all tabs.
+                     */
+                    mainFrame.getjMenuItemCloseAllTabs().addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            //close tabs in navigator
+                            closeAllTabs();
+                        }
+                    });
+
+                    //----------------------------------------------------------
                     mainFrame.getjMenuItemEventViewer().addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -137,7 +153,7 @@ public class ControllerMainFrame extends Controller {
                         }
                     });
 
-                    //------------------------------------------------------------------
+                    //----------------------------------------------------------
                     mainFrame.getjMenuItemSearchIPAddress().addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -147,7 +163,7 @@ public class ControllerMainFrame extends Controller {
                         }
                     });
 
-                    //------------------------------------------------------------------
+                    //----------------------------------------------------------
                     mainFrame.getjMenuItemModelerChains().addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
@@ -165,42 +181,92 @@ public class ControllerMainFrame extends Controller {
     } // end addListeners
 
     //==========================================================================
-    public void clickTrees(){
-        
+    /**
+     * close tabs in navigator.
+     */
+    private void closeAllTabs() {
+        ControllerNavigator.getInstance().closeTabs();
+    } // end closeAllTabs
+
+    //==========================================================================
+    /**
+     * when some tree is clicked this method is called.<br/> check if tree
+     * collectors is enabled, validate if is a categorie and add the tab.
+     */
+    public void clickTrees() {
+
         JTree treeViews = null;
         String view = null;
         JTree treeCollectors = null;
         String collector = null;
         ControllerNavigator controllerNavigator = null;
-        
+
         try {
-            
-            treeViews = ViewUtilities.getJtreeFromJTabPane(mainFrame.getjTabbedPaneTreeViews());
-            view = ViewUtilities.getSelectedJTree(treeViews);
-            
+
             treeCollectors = ViewUtilities.getJtreeFromJTabPane(mainFrame.getjTabbedPaneCollectors());
-            if(!treeCollectors.isEnabled()){
+            if (!treeCollectors.isEnabled()) {
+                //if tree collectors doesn't enabled is because it is checking the connectivity
                 return;
             }
+
+            treeViews = ViewUtilities.getJtreeFromJTabPane(mainFrame.getjTabbedPaneTreeViews());
+            view = ViewUtilities.getSelectedJTree(treeViews);
             collector = ViewUtilities.getSelectedJTree(treeCollectors);
-            
-            if(view == null || collector == null){
+
+            if (!validateClick(view, collector)) {
                 return;
-            }           
-            
-            
-            //aqui me quede
+            }
+
+            //aqui me quede ******
             controllerNavigator = ControllerNavigator.getInstance();
             JPanel panel = new JPanel();
             panel.setName(view);
-            controllerNavigator.addTab(panel);
+            controllerNavigator.addTab(view, panel);
             mainFrame.getjSplitPaneMain().setRightComponent(controllerNavigator.getNavigator());
-            
+
         } catch (Exception e) {
-            NOTIFICATIONS.error("unexpected error", e);
+            NOTIFICATIONS.error("Unexpected error", e);
         }
-    
+
     } // end clickTrees
+
+    //==========================================================================    
+    /**
+     * validate if everything is ok when someone do click in the trees.
+     *
+     * @param view String
+     * @param collector String
+     * @return boolean
+     */
+    private boolean validateClick(String view, String collector) {
+
+        boolean flag = true;
+
+        try {
+
+            if (view == null || collector == null) {
+                return false;
+            }
+
+            //validate if the collector is equals to "servers"
+            if (collector.equalsIgnoreCase("servers")) {
+                //"servers" doesn't work, I need a collector name
+                return false;
+            }
+
+            //validate if is a categorie
+            if (CategoriesUtilities.exitsCategorie(view)) {
+                //this means that the selection in tree view is a category.
+                return false;
+            }
+
+        } catch (Exception e) {
+            NOTIFICATIONS.error("Unexpected error", e);
+        }
+
+        return flag;
+
+    } // end validateClick
 
     //==========================================================================
     @Override
@@ -214,24 +280,6 @@ public class ControllerMainFrame extends Controller {
      */
     @Override
     public void destroyCurrentThread() {
-        mainFrame = null;
-        sw = null;
-        configuration = null;
     } // end destroyCurrentThread
-
-    //==========================================================================
-    @Override
-    protected void finalize() throws Throwable {
-
-        try {
-            NOTIFICATIONS.information("clean up ControllerMainFrame", false);
-            destroyCurrentThread();
-        } catch (Exception e) {
-            NOTIFICATIONS.error("Unexpected error", e);
-        } finally {
-            super.finalize();
-        }
-
-    } // end finalize
 } // end class
 

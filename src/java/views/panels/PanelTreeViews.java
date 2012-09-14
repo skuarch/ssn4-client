@@ -42,6 +42,7 @@ public class PanelTreeViews extends javax.swing.JPanel {
 
         javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("wait...");
         jTreeViews.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTreeViews.setRootVisible(false);
         jScrollPane1.setViewportView(jTreeViews);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
