@@ -1,13 +1,18 @@
 package views.splits;
 
+import controllers.global.ControllerNotifications;
+import java.awt.Component;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
+import javax.swing.SwingWorker;
 
 /**
  *
  * @author skuarch
  */
 public abstract class FactoryTab extends JTabbedPane {
+
+    protected final ControllerNotifications NOTIFICATIONS = new ControllerNotifications();
 
     //==========================================================================    
     public FactoryTab() {
@@ -30,4 +35,5 @@ public abstract class FactoryTab extends JTabbedPane {
             }
         }).start();
     } // end updateUI
+    
 } // end class

@@ -185,7 +185,7 @@ public class ControllerMainFrame extends Controller {
      * close tabs in navigator.
      */
     private void closeAllTabs() {
-        ControllerNavigator.getInstance().closeTabs();
+        ControllerNavigator.getInstance().closeAllTabs();
     } // end closeAllTabs
 
     //==========================================================================
@@ -199,6 +199,7 @@ public class ControllerMainFrame extends Controller {
         String view = null;
         JTree treeCollectors = null;
         String collector = null;
+        String job = null;
         ControllerNavigator controllerNavigator = null;
 
         try {
@@ -213,7 +214,7 @@ public class ControllerMainFrame extends Controller {
             view = ViewUtilities.getSelectedJTree(treeViews);
             collector = ViewUtilities.getSelectedJTree(treeCollectors);
 
-            if (!validateClick(view, collector)) {
+            if (!validateClick(view, collector)) { //aqui se tiene que validar el job
                 return;
             }
 

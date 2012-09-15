@@ -1,6 +1,5 @@
 package model.util;
 
-import java.awt.Dimension;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -31,9 +30,7 @@ public class JTabPaneUtilities {
 
         try {
 
-            panelTitle.setOpaque(false);
-            
-            panelTitle.setPreferredSize(new Dimension(title.length() * 8, 22));
+            panelTitle.setOpaque(false);            
             
             //close button
             panelTitle.add(closeLabel);

@@ -40,6 +40,7 @@
         <mapping class="model.beans.Users"/>        
         <mapping class="model.beans.Collectors"/>
         <mapping class="model.beans.Categories"/>
+        <mapping class="model.beans.Subcategories"/>
         <!--<mapping resource="categories.hbm.xml"/>-->
 
     </session-factory>

@@ -37,7 +37,7 @@ public class DAO {
             session = HibernateUtil.getSessionFactory().openSession();        
             
         } catch (Exception e) {
-            HibernateUtil.closeSession(session);
+            HibernateUtil.closeSession(session);            
             throw e;
         }
     } // end startSession

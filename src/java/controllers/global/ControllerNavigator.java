@@ -12,7 +12,7 @@ import model.util.JTabPaneUtilities;
 import views.splits.Navigator;
 
 /**
- * Controller for Navigator.
+ * Controller for Navigator view.
  *
  * @author skuarch
  */
@@ -76,7 +76,7 @@ public class ControllerNavigator extends Controller {
                 try {
 
                     panelTitle = JTabPaneUtilities.getPanelTitle(string, getCloseLabel(string));
-                    
+
                     navigator.addTab(string, component);
                     navigator.setTabComponentAt(navigator.getTabCount() - 1, panelTitle);
                     navigator.setSelectedIndex(navigator.getTabCount() - 1);
@@ -91,11 +91,34 @@ public class ControllerNavigator extends Controller {
 
     } // end addTab
 
+    //==========================================================================    
+    /**
+     * close tab by name.
+     *
+     * @param tabName String
+     */
+    public void closeTab(String nameComponent) {
+
+        new SwingWorker<Void, Void>() {
+            @Override
+            protected Void doInBackground() throws Exception {
+
+                try {
+                } catch (Exception e) {
+                    NOTIFICATIONS.error("Error closing tab", e);
+                }
+
+                return null;
+            }
+        }.execute();
+
+    } // end closeTab
+
     //==========================================================================
     /**
      * close all tabs in navigator.
      */
-    public void closeTabs() {
+    public void closeAllTabs() {
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground() throws Exception {
@@ -109,7 +132,7 @@ public class ControllerNavigator extends Controller {
                 return null;
             }
         }.execute();
-    } // end closeTabs
+    } // end closeAllTabs
 
     //==========================================================================
     /**
@@ -139,16 +162,6 @@ public class ControllerNavigator extends Controller {
 
         return closeLabel;
     }
-
-    //==========================================================================
-    /**
-     * close tab by name.
-     *
-     * @param tabName String
-     */
-    public void closeTab(String nameComponent) {
-        System.out.println("closing tab");
-    } // end closeTab
 
     //==========================================================================
     @Override

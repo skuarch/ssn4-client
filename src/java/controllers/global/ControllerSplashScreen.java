@@ -67,11 +67,12 @@ public class ControllerSplashScreen extends Controller {
 
         } catch (Exception e) {
             NOTIFICATIONS.error("Somethig is wrong in loader,<br>-Please report to administrator", e);
+            System.exit(0);
         } finally {
             jMSProccessor = null;
             eventViewer = null;            
             cl = null;
-            mainFrame = null;
+            mainFrame = null;            
         }
 
     } // end loader

@@ -19,73 +19,73 @@ public class Subcategories implements Serializable {
     @Id
     @Column(name="subcategorie_id")
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private long subcategorieId;
+    private long subCategorieId;
     
-    @Column(name="categorie_active")
-    private int categorieIsActive;
+    @Column(name="subcategorie_active")
+    private int subCategorieIsActive;
     
     @Column(name="subcategorie_name")
-    private String subcategorieName;
+    private String subCategorieName;
     
     @Column(name="subcategorie_categorie_id")
-    private int categorieId;
+    private long categorieId;
     
     @Column(name="subcategorie_order")
-    private int subcategorieOrder;
+    private int subCategorieOrder;
     
     @Column(name="subcategorie_chart_type")
-    private int subcategorieChartType;
+    private int subCategorieChartType;
     
     //==========================================================================
     public Subcategories(){    
     } // end Subcategories
 
-    public long getSubcategorieId() {
-        return subcategorieId;
+    public long getSubCategorieId() {
+        return subCategorieId;
     }
 
-    public void setSubcategorieId(long subcategorieId) {
-        this.subcategorieId = subcategorieId;
+    public void setSubCategorieId(long subCategorieId) {
+        this.subCategorieId = subCategorieId;
     }
 
-    public int getCategorieIsActive() {
-        return categorieIsActive;
+    public int getSubCategorieIsActive() {
+        return subCategorieIsActive;
     }
 
-    public void setCategorieIsActive(int categorieIsActive) {
-        this.categorieIsActive = categorieIsActive;
+    public void setSubCategorieIsActive(int subCategorieIsActive) {
+        this.subCategorieIsActive = subCategorieIsActive;
     }
 
-    public String getSubcategorieName() {
-        return subcategorieName;
+    public String getSubCategorieName() {
+        return subCategorieName;
     }
 
-    public void setSubcategorieName(String subcategorieName) {
-        this.subcategorieName = subcategorieName;
+    public void setSubCategorieName(String subCategorieName) {
+        this.subCategorieName = subCategorieName;
     }
 
-    public int getCategorieId() {
+    public long getCategorieId() {
         return categorieId;
     }
 
-    public void setCategorieId(int categorieId) {
+    public void setCategorieId(long categorieId) {
         this.categorieId = categorieId;
     }
 
-    public int getSubcategorieOrder() {
-        return subcategorieOrder;
+    public int getSubCategorieOrder() {
+        return subCategorieOrder;
     }
 
-    public void setSubcategorieOrder(int subcategorieOrder) {
-        this.subcategorieOrder = subcategorieOrder;
+    public void setSubCategorieOrder(int subCategorieOrder) {
+        this.subCategorieOrder = subCategorieOrder;
     }
 
-    public int getSubcategorieChartType() {
-        return subcategorieChartType;
+    public int getSubCategorieChartType() {
+        return subCategorieChartType;
     }
 
-    public void setSubcategorieChartType(int subcategorieChartType) {
-        this.subcategorieChartType = subcategorieChartType;
+    public void setSubCategorieChartType(int subCategorieChartType) {
+        this.subCategorieChartType = subCategorieChartType;
     }    
     
 } // end class

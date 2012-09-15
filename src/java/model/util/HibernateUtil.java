@@ -21,7 +21,7 @@ public class HibernateUtil {
 
         } catch (Exception e) {
             try {
-                throw e;
+                throw e;                
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

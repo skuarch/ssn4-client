@@ -14,6 +14,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTree;
 import javax.swing.JViewport;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.tree.TreePath;
 import model.beans.Collectors;
 import model.common.ModelCollectors;
@@ -28,8 +29,8 @@ public class ViewUtilities {
     public static JButton getShutdownButton() {
         JButton button = new JButton();
         button.setIcon(new ImageIcon(ViewUtilities.class.getResource("/views/images/shutdown.png")));
-        button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        button.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
         return button;
     } // end getShutdownButton
 
@@ -37,8 +38,8 @@ public class ViewUtilities {
     public static JButton getCleanButton() {
         JButton button = new JButton();
         button.setIcon(new ImageIcon(ViewUtilities.class.getResource("/views/images/clear.png")));
-        button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        button.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
         return button;
     } // end getClearButton
 
@@ -46,8 +47,8 @@ public class ViewUtilities {
     public static JButton getOnTopButton() {
         JButton button = new JButton();
         button.setIcon(new ImageIcon(ViewUtilities.class.getResource("/views/images/onTop.png")));
-        button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        button.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
         return button;
     } // end getOnTopButton
 
@@ -55,8 +56,8 @@ public class ViewUtilities {
     public static JButton getRefreshButton() {
         JButton button = new JButton();
         button.setIcon(new ImageIcon(ViewUtilities.class.getResource("/views/images/refresh.png")));
-        button.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        button.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.BOTTOM);
         return button;
     } // end getRefreshButton
 
