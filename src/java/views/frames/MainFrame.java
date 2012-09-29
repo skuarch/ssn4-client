@@ -3,7 +3,6 @@ package views.frames;
 import java.awt.Toolkit;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 
@@ -120,11 +119,7 @@ public class MainFrame extends javax.swing.JFrame {
     public JTabbedPane getjTabbedPaneTreeViews() {
         return jTabbedPaneTreeViews;
     }
-
-    public JPanel getjPanelCenter() {
-        return jPanelCenter;
-    }    
-
+    
     public JMenuItem getjMenuItemCloseAllTabs() {
         return jMenuItemCloseAllTabs;
     }    
@@ -139,8 +134,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jSplitPaneMain = new javax.swing.JSplitPane();
-        jPanelCenter = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jSplitPaneTrees = new javax.swing.JSplitPane();
         jTabbedPaneTreeViews = new javax.swing.JTabbedPane();
         jTabbedPaneCollectors = new javax.swing.JTabbedPane();
@@ -173,33 +166,6 @@ public class MainFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jSplitPaneMain.setDividerLocation(200);
-
-        jPanelCenter.setBackground(new java.awt.Color(204, 204, 204));
-
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/views/images/watermark.png"))); // NOI18N
-
-        javax.swing.GroupLayout jPanelCenterLayout = new javax.swing.GroupLayout(jPanelCenter);
-        jPanelCenter.setLayout(jPanelCenterLayout);
-        jPanelCenterLayout.setHorizontalGroup(
-            jPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 476, Short.MAX_VALUE)
-            .addGroup(jPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelCenterLayout.createSequentialGroup()
-                    .addGap(0, 90, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addGap(0, 90, Short.MAX_VALUE)))
-        );
-        jPanelCenterLayout.setVerticalGroup(
-            jPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 450, Short.MAX_VALUE)
-            .addGroup(jPanelCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanelCenterLayout.createSequentialGroup()
-                    .addGap(0, 177, Short.MAX_VALUE)
-                    .addComponent(jLabel1)
-                    .addGap(0, 177, Short.MAX_VALUE)))
-        );
-
-        jSplitPaneMain.setRightComponent(jPanelCenter);
 
         jSplitPaneTrees.setDividerLocation(240);
         jSplitPaneTrees.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
@@ -298,14 +264,13 @@ public class MainFrame extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSplitPaneMain)
+            .addComponent(jSplitPaneMain, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenuAbout;
     private javax.swing.JMenuBar jMenuBar;
     private javax.swing.JMenu jMenuConfiguration;
@@ -329,7 +294,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuRules;
     private javax.swing.JMenu jMenuShaper;
     private javax.swing.JMenu jMenuTools;
-    private javax.swing.JPanel jPanelCenter;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JSplitPane jSplitPaneMain;

@@ -187,10 +187,10 @@ public class ViewUtilities {
     //==========================================================================
     public static JTree getJtreeFromJTabPane(JTabbedPane jTabbedPane) throws Exception {
 
-        if(jTabbedPane == null || jTabbedPane.getComponents().length < 1){
+        if (jTabbedPane == null || jTabbedPane.getComponents().length < 1) {
             throw new Exception("jTabbedPane is null or doesn't have components");
         }
-        
+
         JPanel panel = null;
         JScrollPane scrollPane = null;
         JViewport viewport = null;
@@ -209,32 +209,82 @@ public class ViewUtilities {
 
         return jtree;
     } // end getJtreeFromJTabPane
-    
+
     //==========================================================================
-    public static String getSelectedJTree(JTree jTree) throws Exception{
-    
-        if(jTree == null){
+    public static String getSelectedJTree(JTree jTree) throws Exception {
+
+        if (jTree == null) {
             throw new Exception("jTree is null");
         }
-        
+
         String selected = null;
         TreePath treePath = null;
-        
+
         try {
-            
-            treePath = jTree.getSelectionPath();            
-            if(treePath == null){
+
+            treePath = jTree.getSelectionPath();
+            if (treePath == null) {
                 return null;
-            }else{
+            } else {
                 selected = treePath.getLastPathComponent().toString();
             }
-            
+
         } catch (Exception e) {
             throw e;
         }
-        
+
         return selected;
-        
+
     } // end getSelectedJTree
-    
+
+    //==========================================================================
+    public static String getOneBefore(TreePath treePath) throws Exception {
+
+        if (treePath == null) {
+            return null;
+        }
+
+        String rtn = null;
+        int length = 0;
+
+        try {
+
+            rtn = treePath.toString();
+            rtn = rtn.replace("[", "");
+            rtn = rtn.replace("]", "");
+            length = rtn.split(",").length;
+
+            if (rtn.contains(",")) {
+
+                //tree root
+                if (length == 1) {
+                    rtn = rtn.split(",")[0];
+                }
+
+                //tree second level
+                if (length == 2) {
+                    rtn = rtn.split(",")[1];
+                }
+
+                if (length == 3) {
+                    rtn = rtn.split(",")[1];
+                }
+
+            }
+
+            //without space
+            if (rtn.startsWith(" ")) {
+                rtn = rtn.replaceFirst(" ", "");
+            }
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            length = 0;
+            treePath = null;
+        }
+
+        return rtn;
+
+    } //  end getOneBefore
 } // end class

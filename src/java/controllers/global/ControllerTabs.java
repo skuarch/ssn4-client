@@ -1,78 +1,99 @@
 package controllers.global;
 
-import controllers.Controller;
+import controllers.sniffer.ControllerTreeCollectors;
+import controllers.sniffer.ControllerTreeViews;
 import java.awt.Component;
-import javax.swing.SwingWorker;
-import views.splits.Navigator;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import model.util.JTabPaneUtilities;
+import model.util.ValidationUtilities;
+import views.splits.SubNavigator;
 
 /**
  *
  * @author skuarch
  */
-public class ControllerTabs extends Controller {
+public class ControllerTabs implements Runnable {
+
+    private static final ControllerNotifications NOTIFICATIONS = new ControllerNotifications();
+    private static final ControllerNavigator CN = ControllerNavigator.getInstance();
+    private static final ControllerTreeViews CTV = new ControllerTreeViews();
+    private static final ControllerTreeCollectors CTC = new ControllerTreeCollectors();
+    private static final ControllerMainFrame CMF = ControllerMainFrame.getInstance();
+    private String view = null;
+    private String collector = null;
+    private String job = null;
 
     //==========================================================================
-    private ControllerTabs() {
-    }
+    public ControllerTabs(String view, String collector, String job) {
+        this.view = view;
+        this.collector = collector;
+        this.job = job;
+    } // end controllerTabs
 
     //==========================================================================
-    public static ControllerTabs getInstance() {
-        return ControllerTabsHolder.INSTANCE;
-    }
+    @Override
+    public void run() {
 
-    //==========================================================================
-    private static class ControllerTabsHolder {
+        JPanel panel = null;
+        SubNavigator sn = null;
+        Component tmpComponent = null;
 
-        private static final ControllerTabs INSTANCE = new ControllerTabs();
-    }
+        try {
 
-    //==========================================================================
-    public void addTabNavigator(final Component component) {
-
-        if (component == null) {
-            NOTIFICATIONS.error("Error adding component, component is null", new NullPointerException());
-            return;
-        }
-
-        if (component.getName() == null || component.getName().length() < 1) {
-            NOTIFICATIONS.error("Error the name of component is null", new NullPointerException());
-            return;
-        }
-
-        new SwingWorker<Void, Void>() {
-            @Override
-            protected Void doInBackground() throws Exception {
-
-                Navigator navigator = new Navigator();
-
-                try {
-
-                    navigator.add(component);
-
-                } catch (Exception e) {
-                    NOTIFICATIONS.error("Error adding tab in window", e);
-                }
-                return null;
+            if (!ValidationUtilities.validateClickTree(view, collector, job)) {
+                return;
             }
-        }.execute();
 
-    } // end addTabNavigator 
+            System.out.println("view: " + view + " collector: " + collector + " job: " + job);
+            
+            
+            // crear el hashmap                       
+
+            //checar si el navegador tiene algo
+            //si no tiene nada se le agrega un subnavigator            
+            if (CN.getNavigator().getTabCount() < 1) {
+                CMF.setRightComponent(CN.getNavigator());
+                sn = new SubNavigator();
+                sn.setName(job);
+                System.out.println("1");
+            } else {
+                sn = (SubNavigator) CN.getComponent(job, CN.getNavigator());
+                System.out.println("2");
+            }            
+
+            sn.setName(job);
+            sn.addTab(view, new JPanel());
+            CN.addTab(CN.getNavigator(), job, sn, CN.getCloseLabel(job, CN.getNavigator()));
+
+        } catch (Exception e) {
+            NOTIFICATIONS.error("Unexpected error", e);
+        }
+
+    } // end run
 
     //==========================================================================
-    @Override
-    public void setupInterface() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    /**
+     * search if the component exists in navigator if the component doesn't
+     * exist this method return null.
+     *
+     * @param nameComponent String
+     * @return Component
+     * @throws Exception
+     */
+    public Component getComponent(String nameComponent, JTabbedPane jTabbedPane) throws Exception {
 
-    //==========================================================================
-    @Override
-    public void setVisible(boolean flag) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        Component component = null;
 
-    //==========================================================================
-    @Override
-    public void destroyCurrentThread() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+        try {
+
+            component = JTabPaneUtilities.getComponent(jTabbedPane, nameComponent);
+
+        } catch (Exception e) {
+            NOTIFICATIONS.error("Error getting the component", e);
+        }
+
+        return component;
+
+    } // end getComponent
 } // end class

@@ -1,10 +1,8 @@
 package views.splits;
 
 import controllers.global.ControllerNotifications;
-import java.awt.Component;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
-import javax.swing.SwingWorker;
 
 /**
  *

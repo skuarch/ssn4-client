@@ -4,17 +4,18 @@ import controllers.Controller;
 import controllers.sniffer.ControllerSearchIPAddress;
 import controllers.sniffer.ControllerTreeCollectors;
 import controllers.sniffer.ControllerTreeViews;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JPanel;
+import javax.swing.JFrame;
 import javax.swing.JTree;
 import javax.swing.SwingWorker;
 import model.beans.Configuration;
 import model.common.ModelConfiguration;
-import model.util.CategoriesUtilities;
 import model.util.ViewUtilities;
 import views.dialogs.EventViewer;
 import views.frames.MainFrame;
+import views.panels.LogoPanel;
 
 /**
  * controller for handler MainFrame window.
@@ -72,8 +73,6 @@ public class ControllerMainFrame extends Controller {
     @Override
     public void setupInterface() {
 
-        mainFrame.getjSplitPaneMain().setDividerLocation(200);
-
         sw = new SwingWorker() {
             @Override
             protected Object doInBackground() throws Exception {
@@ -83,6 +82,8 @@ public class ControllerMainFrame extends Controller {
 
                 try {
 
+                    mainFrame.getjSplitPaneMain().setRightComponent(new LogoPanel());
+                    mainFrame.getjSplitPaneMain().setDividerLocation(200);
                     mainFrame.setTitle("SSN [ " + configuration.getWindowTitle() + " ]");
 
                     //add tree views
@@ -142,6 +143,7 @@ public class ControllerMainFrame extends Controller {
                         public void actionPerformed(ActionEvent e) {
                             //close tabs in navigator
                             closeAllTabs();
+                            setLogoPanel();
                         }
                     });
 
@@ -185,7 +187,7 @@ public class ControllerMainFrame extends Controller {
      * close tabs in navigator.
      */
     private void closeAllTabs() {
-        ControllerNavigator.getInstance().closeAllTabs();
+        ControllerNavigator.getInstance().closeAllTabs();        
     } // end closeAllTabs
 
     //==========================================================================
@@ -200,6 +202,7 @@ public class ControllerMainFrame extends Controller {
         JTree treeCollectors = null;
         String collector = null;
         String job = null;
+        Thread controlNavigatorThread = null;
         ControllerNavigator controllerNavigator = null;
 
         try {
@@ -212,18 +215,20 @@ public class ControllerMainFrame extends Controller {
 
             treeViews = ViewUtilities.getJtreeFromJTabPane(mainFrame.getjTabbedPaneTreeViews());
             view = ViewUtilities.getSelectedJTree(treeViews);
-            collector = ViewUtilities.getSelectedJTree(treeCollectors);
-
-            if (!validateClick(view, collector)) { //aqui se tiene que validar el job
-                return;
-            }
+            job = ViewUtilities.getSelectedJTree(treeCollectors);
+            collector = ViewUtilities.getOneBefore(treeCollectors.getSelectionPath());
 
             //aqui me quede ******
-            controllerNavigator = ControllerNavigator.getInstance();
-            JPanel panel = new JPanel();
-            panel.setName(view);
-            controllerNavigator.addTab(view, panel);
-            mainFrame.getjSplitPaneMain().setRightComponent(controllerNavigator.getNavigator());
+            //llamar a controlNavigators !!!!!!
+            controlNavigatorThread = new Thread(new ControllerTabs(view, collector, job));
+            controlNavigatorThread.setName("controlnavigatorThread");
+            controlNavigatorThread.start();
+
+            /*controllerNavigator = ControllerNavigator.getInstance();
+             JPanel panel = new JPanel();
+             panel.setName(collector);
+             controllerNavigator.addTab(collector, panel);
+             mainFrame.getjSplitPaneMain().setRightComponent(controllerNavigator.getNavigator());*/
 
         } catch (Exception e) {
             NOTIFICATIONS.error("Unexpected error", e);
@@ -231,43 +236,20 @@ public class ControllerMainFrame extends Controller {
 
     } // end clickTrees
 
-    //==========================================================================    
-    /**
-     * validate if everything is ok when someone do click in the trees.
-     *
-     * @param view String
-     * @param collector String
-     * @return boolean
-     */
-    private boolean validateClick(String view, String collector) {
+    //==========================================================================
+    public void setLogoPanel() {
+        mainFrame.getjSplitPaneMain().setRightComponent(new LogoPanel());
+    }
 
-        boolean flag = true;
+    //==========================================================================
+    public JFrame getMainFrame() {
+        return mainFrame;
+    }
 
-        try {
-
-            if (view == null || collector == null) {
-                return false;
-            }
-
-            //validate if the collector is equals to "servers"
-            if (collector.equalsIgnoreCase("servers")) {
-                //"servers" doesn't work, I need a collector name
-                return false;
-            }
-
-            //validate if is a categorie
-            if (CategoriesUtilities.exitsCategorie(view)) {
-                //this means that the selection in tree view is a category.
-                return false;
-            }
-
-        } catch (Exception e) {
-            NOTIFICATIONS.error("Unexpected error", e);
-        }
-
-        return flag;
-
-    } // end validateClick
+    //==========================================================================
+    public void setRightComponent(Component component) {
+        mainFrame.getjSplitPaneMain().setRightComponent(component);
+    }
 
     //==========================================================================
     @Override
