@@ -14,14 +14,13 @@ public class Navigator extends FactoryTab {
      */
     public Navigator() {
         super();
-        setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);         
     } // end Navigator 
-    
+
     //==========================================================================
     @Override
     public void updateUI() {
         super.updateUI();
-    } 
-    
+    }
 } // end class
 

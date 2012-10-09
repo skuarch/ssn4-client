@@ -1,9 +1,15 @@
 package model.util;
 
+import controllers.global.ControllerFloatFrame;
+import controllers.global.ControllerNavigator;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.SwingUtilities;
 
 /**
  * Utilities for JTabPane.
@@ -14,11 +20,11 @@ public class JTabPaneUtilities {
 
     //==========================================================================
     /**
-     * create a panel with a close button.<br/> this method is used for to put a
+     * create a panel with a close label.<br/> this method is used for to put a
      * <code>JPanel</code> in a tab.
      *
-     * @param title String
-     * @param closeLabel JLabel
+     * @param title String with the name of tab
+     * @param closeLabel label for close the tab
      * @return JPanel
      * @throws Exception
      */
@@ -49,10 +55,10 @@ public class JTabPaneUtilities {
 
     //==========================================================================
     /**
-     * close tab by name.
+     * close tab using its name.
      *
      * @param jTabbedPane JTabbedPane
-     * @param nameComponent String
+     * @param nameComponent String with the name of component
      * @throws Exception
      */
     public static void closeTab(JTabbedPane jTabbedPane, String nameComponent) throws Exception {
@@ -78,7 +84,6 @@ public class JTabPaneUtilities {
                 }
 
                 if (components[i].getName().equalsIgnoreCase(nameComponent)) {
-                    System.out.println("close " + nameComponent + " position " + i);
                     jTabbedPane.remove(jTabbedPane.getComponent(i));
                 }
             }
@@ -90,6 +95,14 @@ public class JTabPaneUtilities {
     } // end closeTab
 
     //==========================================================================
+    /**
+     * get the component using its name
+     *
+     * @param jTabbedPane
+     * @param nameComponent
+     * @return
+     * @throws Exception
+     */
     public static Component getComponent(JTabbedPane jTabbedPane, String nameComponent) throws Exception {
 
         if (jTabbedPane == null) {
@@ -116,13 +129,11 @@ public class JTabPaneUtilities {
                 if (c == null || c.getName() == null || c.getName().length() < 1) {
                     continue;
                 }
-                System.out.println(c.getName() + " == " + nameComponent);
+
                 if (c.getName().equalsIgnoreCase(nameComponent)) {
-                    System.out.println("a huevo");
                     component = c;
                     break;
                 }
-
             }
 
         } finally {
@@ -181,10 +192,10 @@ public class JTabPaneUtilities {
 
     //==========================================================================
     /**
-     * return a num with the name of components.
+     * return a number with the name of components that are similars.
      *
      * @param jTabbedPane
-     * @param nameComponent
+     * @param nameComponent Strinf with the name of component
      * @return
      * @throws Exception
      */
@@ -229,4 +240,65 @@ public class JTabPaneUtilities {
         return nComponent;
 
     } // end componentsSameName
+
+    //==========================================================================
+    /**
+     * create a name of panel, example if one panel has the name BW and you want
+     * add another panel with the same name (BW) this method checks how many
+     * panels has the similar name and returns a new name in this case returns
+     * (BW 1)
+     *
+     * @param view
+     * @param jTabbedPane
+     * @return
+     * @throws Exception
+     */
+    public static String getPanelName(String view, JTabbedPane jTabbedPane) throws Exception {
+
+        if (view == null || jTabbedPane == null) {
+            throw new NullPointerException("jtabbedPane or view is null");
+        }
+
+        String panelName = null;
+        int sameName = 0;
+
+        sameName = JTabPaneUtilities.componentsSameName(jTabbedPane, view);
+
+        if (sameName > 0) {
+            panelName = view + " " + sameName;
+        } else {
+            panelName = view;
+        }
+
+        return panelName;
+    } // end getPanelName
+
+    //==========================================================================
+    /**
+     * this label is for be a part of the title of tab. <br/> when this label is
+     * pressed, this opens a new frame with the component int he middle
+     *
+     * @param component component for show in the new frame
+     * @param job String with the name of tab.
+     * @return
+     */
+    public static JLabel getLabelComponent(final Component component, final String job) {
+        JLabel label = new JLabel(new ImageIcon(JTabPaneUtilities.class.getResource("/views/images/external.png")));
+        label.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        ControllerNavigator.getInstance().checkTabs(job);
+                        ControllerFloatFrame cff = new ControllerFloatFrame(component, job);
+                        cff.setupInterface();
+                        cff.setVisible(true);
+                    }
+                });
+            }
+        });
+        return label;
+    } // end getLabelComponent
 } // end class

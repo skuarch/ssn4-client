@@ -23,6 +23,11 @@ public class ControllerSubNavigator extends FabricTabs {
     public SubNavigator getSubNavigator() {
         return subNavigator;
     }
+    
+    //==========================================================================
+    public void setNavigator(SubNavigator subNavigator){
+        this.subNavigator = subNavigator;
+    }
 
     //==========================================================================
     @Override
@@ -42,4 +47,3 @@ public class ControllerSubNavigator extends FabricTabs {
         }.execute();
     } // end closeAllTabs
 } // end class
-

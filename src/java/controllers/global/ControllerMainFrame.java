@@ -9,9 +9,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.JTree;
+import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import model.beans.Configuration;
 import model.common.ModelConfiguration;
+import model.util.ValidationUtilities;
 import model.util.ViewUtilities;
 import views.dialogs.EventViewer;
 import views.frames.MainFrame;
@@ -187,7 +189,7 @@ public class ControllerMainFrame extends Controller {
      * close tabs in navigator.
      */
     private void closeAllTabs() {
-        ControllerNavigator.getInstance().closeAllTabs();        
+        ControllerNavigator.getInstance().closeAllTabs();
     } // end closeAllTabs
 
     //==========================================================================
@@ -218,11 +220,13 @@ public class ControllerMainFrame extends Controller {
             job = ViewUtilities.getSelectedJTree(treeCollectors);
             collector = ViewUtilities.getOneBefore(treeCollectors.getSelectionPath());
 
+            if (!ValidationUtilities.validateClickTree(view, collector, job)) {
+                return;
+            }
+            
             //aqui me quede ******
             //llamar a controlNavigators !!!!!!
-            controlNavigatorThread = new Thread(new ControllerTabs(view, collector, job));
-            controlNavigatorThread.setName("controlnavigatorThread");
-            controlNavigatorThread.start();
+            new TabsDriver().addTabNavigator(view, job);
 
             /*controllerNavigator = ControllerNavigator.getInstance();
              JPanel panel = new JPanel();
@@ -247,8 +251,13 @@ public class ControllerMainFrame extends Controller {
     }
 
     //==========================================================================
-    public void setRightComponent(Component component) {
-        mainFrame.getjSplitPaneMain().setRightComponent(component);
+    public void setRightComponent(final Component component) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                mainFrame.getjSplitPaneMain().setRightComponent(component);
+            }
+        });
     }
 
     //==========================================================================

@@ -72,6 +72,9 @@ public class ThreadNode extends Thread {
                     node = new DefaultMutableTreeNode(server);
                     noConnection = new DefaultMutableTreeNode("without connection");
                     node.insert(noConnection, 0);
+                    noConnection = new DefaultMutableTreeNode("without connection 1");
+                    node.insert(noConnection, 0);
+                    
                     arrayNodes.add(node);
                 }
 

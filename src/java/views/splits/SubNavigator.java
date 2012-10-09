@@ -6,15 +6,15 @@ import javax.swing.JTabbedPane;
  *
  * @author skuarch
  */
-public class SubNavigator extends FactoryTab {
-
+public class SubNavigator extends FactoryTab {    
+    
     //==========================================================================
     /**
      * create a instance.
      */
     public SubNavigator() {
         super();
-        setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+        setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);            
     } // end Navigator 
 
     //==========================================================================
