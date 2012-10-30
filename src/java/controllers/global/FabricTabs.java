@@ -44,24 +44,29 @@ public abstract class FabricTabs {
             return;
         }
 
-        SwingUtilities.invokeLater(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
 
-                try {
+                        try {
 
-                    //panelTitle = JTabPaneUtilities.getPanelTitle(string, closeLabel);
-                    //component.setName(string);
-                    jTabbedPane.addTab(string, component);
-                    jTabbedPane.setTabComponentAt(jTabbedPane.getTabCount() - 1, panelTitle);
-                    jTabbedPane.setSelectedIndex(jTabbedPane.getTabCount() - 1);
+                            //panelTitle = JTabPaneUtilities.getPanelTitle(string, closeLabel);
+                            //component.setName(string);
+                            jTabbedPane.addTab(string, component);
+                            jTabbedPane.setTabComponentAt(jTabbedPane.getTabCount() - 1, panelTitle);
+                            jTabbedPane.setSelectedIndex(jTabbedPane.getTabCount() - 1);
 
-                } catch (Exception e) {
-                    NOTIFICATIONS.error("Imposible add new tab", e);
-                }
+                        } catch (Exception e) {
+                            NOTIFICATIONS.error("Imposible add new tab", e);
+                        }
+                    }
+                });
             }
-        });
-
+        }).start();
+        
     } // end addTab
 
     //==========================================================================    
@@ -130,13 +135,13 @@ public abstract class FabricTabs {
 
             closeLabel.addMouseListener(new MouseAdapter() {
                 @Override
-                public void mouseClicked(MouseEvent e) {                   
+                public void mouseClicked(MouseEvent e) {
 
                     try {
 
                         FabricTabs.this.closeTab(nameComponent, jTabbedPane);
 
-                        if (jTabbedPane instanceof SubNavigator) {                            
+                        if (jTabbedPane instanceof SubNavigator) {
                             //check if the subnavigator has a tab, 
                             //if subnavigator doesn't have tabs close tab in navigator
                             if (jTabbedPane.getTabCount() < 2) {

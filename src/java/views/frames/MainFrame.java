@@ -122,7 +122,11 @@ public class MainFrame extends javax.swing.JFrame {
     
     public JMenuItem getjMenuItemCloseAllTabs() {
         return jMenuItemCloseAllTabs;
-    }    
+    }  
+
+    public JMenuItem getjMenuItemOptions() {
+        return jMenuItemOptions;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -153,6 +157,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItemGenerateReport = new javax.swing.JMenuItem();
         jMenuConfiguration = new javax.swing.JMenu();
         jMenuItemConfiguration = new javax.swing.JMenuItem();
+        jMenuItemOptions = new javax.swing.JMenuItem();
         jMenuShaper = new javax.swing.JMenu();
         jMenuModelerManage = new javax.swing.JMenu();
         jMenuItemModelerChains = new javax.swing.JMenuItem();
@@ -222,6 +227,9 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuItemConfiguration.setText("configuration");
         jMenuConfiguration.add(jMenuItemConfiguration);
 
+        jMenuItemOptions.setText("options");
+        jMenuConfiguration.add(jMenuItemOptions);
+
         jMenuBar.add(jMenuConfiguration);
 
         jMenuShaper.setText("Shaper");
@@ -284,6 +292,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemGenerateReport;
     private javax.swing.JMenuItem jMenuItemModelerChains;
     private javax.swing.JMenuItem jMenuItemNetworkScanner;
+    private javax.swing.JMenuItem jMenuItemOptions;
     private javax.swing.JMenuItem jMenuItemSearchIPAddress;
     private javax.swing.JMenuItem jMenuItemSearchPort;
     private javax.swing.JMenuItem jMenuItemSearchSubnet;

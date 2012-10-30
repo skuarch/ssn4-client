@@ -288,15 +288,20 @@ public class JTabPaneUtilities {
             @Override
             public void mouseClicked(MouseEvent e) {
 
-                SwingUtilities.invokeLater(new Runnable() {
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        ControllerNavigator.getInstance().checkTabs(job);
-                        ControllerFloatFrame cff = new ControllerFloatFrame(component, job);
-                        cff.setupInterface();
-                        cff.setVisible(true);
+                        SwingUtilities.invokeLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                ControllerNavigator.getInstance().checkTabs(job);
+                                ControllerFloatFrame cff = new ControllerFloatFrame(component, job);
+                                cff.setupInterface();
+                                cff.setVisible(true);
+                            }
+                        });
                     }
-                });
+                }).start();
             }
         });
         return label;

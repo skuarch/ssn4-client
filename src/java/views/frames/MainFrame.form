@@ -95,6 +95,11 @@
                 <Property name="text" type="java.lang.String" value="configuration"/>
               </Properties>
             </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItemOptions">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="options"/>
+              </Properties>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuShaper">

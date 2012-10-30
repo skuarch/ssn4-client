@@ -16,6 +16,7 @@ import model.common.ModelConfiguration;
 import model.util.ValidationUtilities;
 import model.util.ViewUtilities;
 import views.dialogs.EventViewer;
+import views.dialogs.Options;
 import views.frames.MainFrame;
 import views.panels.LogoPanel;
 
@@ -173,6 +174,15 @@ public class ControllerMainFrame extends Controller {
                         public void actionPerformed(ActionEvent e) {
                         }
                     });
+                    
+                    //----------------------------------------------------------
+                    mainFrame.getjMenuItemOptions().addActionListener(new ActionListener() {
+
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            new Options(null, true).setVisible(true);
+                        }
+                    });
 
                 } catch (Exception e) {
                     NOTIFICATIONS.error("Error adding listeners.<br>-Please contact with the administrator for more details", e);
@@ -223,7 +233,7 @@ public class ControllerMainFrame extends Controller {
             if (!ValidationUtilities.validateClickTree(view, collector, job)) {
                 return;
             }
-            
+
             //aqui me quede ******
             //llamar a controlNavigators !!!!!!
             new TabsDriver().addTabNavigator(view, job);
@@ -252,13 +262,19 @@ public class ControllerMainFrame extends Controller {
 
     //==========================================================================
     public void setRightComponent(final Component component) {
-        SwingUtilities.invokeLater(new Runnable() {
+
+        new Thread(new Runnable() {
             @Override
             public void run() {
-                mainFrame.getjSplitPaneMain().setRightComponent(component);
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        mainFrame.getjSplitPaneMain().setRightComponent(component);
+                    }
+                });
             }
-        });
-    }
+        }).start();
+    } // end setRightComponent
 
     //==========================================================================
     @Override

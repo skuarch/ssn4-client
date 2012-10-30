@@ -19,13 +19,15 @@ public abstract class FactoryTab extends JTabbedPane {
 
     //==========================================================================
     /**
-     * updateUI with a thread.
+     * updateUI with thread.
      */
     @Override
     public void updateUI() {
         new Thread(new Runnable() {
+            @Override
             public void run() {
                 SwingUtilities.invokeLater(new Runnable() {
+                    @Override
                     public void run() {
                         FactoryTab.super.updateUI();
                     }
